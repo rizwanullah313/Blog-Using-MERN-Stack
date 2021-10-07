@@ -1,7 +1,6 @@
 const app = require("express");
 const router = app.Router();
-router.post("/register", (req,res)=>{
-    res.send("sucessfully send data using post man post");
-});
+const {register} = require("../controllers/userController");
+router.post("/register", register); // ye register imrt howa usercontroler se
 
 module.exports = router;

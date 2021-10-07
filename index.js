@@ -8,6 +8,7 @@ const app = express();
 // connect mongodb database
 connect();
 
+// user work like a middleware
 app.use("/", router);
 
 // after add router and register path nechy wala comment kerdia
