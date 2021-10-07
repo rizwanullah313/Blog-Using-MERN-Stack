@@ -1,5 +1,5 @@
 const express = require("express");
-const  bodyParser = require("body-parser");
+const bodyParser = require("body-parser");
 const connect = require("./config/db");
 const router = require("./routes/userRoutes");
 require('dotenv').config()
@@ -20,7 +20,7 @@ app.use("/", router);
 // })
 
 const PORT = process.env.PORT || 5000
-app.listen(PORT, ()=>{
+app.listen(PORT, () => {
     console.log('Your app is running');
 });
 

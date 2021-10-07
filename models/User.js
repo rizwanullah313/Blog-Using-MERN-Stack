@@ -1,4 +1,4 @@
-const {model, Schema} = require("mongoose");
+const { model, Schema } = require("mongoose");
 const { use } = require("../routes/userRoutes");
 
 const userSchema = new Schema({
@@ -10,11 +10,11 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
-    password:{
+    password: {
         type: String,
         required: true,
     },
-},{
+}, {
     timestamps: true
 });
 
