@@ -42,7 +42,9 @@ module.exports.register = async (req, res) => {
 				email,
 				password: hash,
 			});
-			const token = createToken(user);
+			const token = jwt.sign({user}, process.env.SECRET,{
+                expiresIn: '7d'
+            });
 			return res
 				.status(200)
 				.json({ msg: 'Your account has been created', token });
@@ -57,4 +59,9 @@ module.exports.register = async (req, res) => {
         return res.status(500).json({ errors: "one" });
     }
     // 5000 server internal error
+}
+
+
+module.exports.login = (req, res)=>{
+    
 }
