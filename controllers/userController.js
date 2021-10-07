@@ -1,9 +1,14 @@
 const {body, validationResult} = require("express-validator");
 const User = require("../models/User")
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
 
 
 // code for validation
 // npm install --save express-validator
+// npm i bcrypt
+// npm ijsonwebtoken
 module.exports.registerValidations = [
     body("name").not().isEmpty().trim().withMessage("Name is Required"),
     body("email").not().isEmpty().trim().withMessage("Email is Required"),
@@ -31,7 +36,24 @@ module.exports.register = async (req,res)=>{
              if(checkUser){
                  return res.status(400).json({errors: [{msg: 'This Email Is Already Exist'}]});
              }
+
+             const salt = await bcrypt.genSalt(10);
+              // hash password
+        const hash = await bcrypt.hash(password, salt);
+        try{
+            const user = await User.create({
+                name,
+                email,
+                password: hash,
+            })
+
+        }catch(error){
+            return res.status(500).json({errors: error});
         }
+
+
+        }
+       
         catch(error){
            return res.status(500).json({errors: error});
         }
