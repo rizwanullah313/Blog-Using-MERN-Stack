@@ -61,7 +61,14 @@ module.exports.register = async (req, res) => {
     // 5000 server internal error
 }
 
+module.exports.loginValiations = [
+	body('email').not().isEmpty().trim().withMessage('Email is required'),
+	body('password').not().isEmpty().withMessage('Password is required'),
+];
 
 module.exports.login = (req, res)=>{
-    
+    const errors =  validationResult(req);
+    if(!errors.isEmpty()){
+        return res.status(400).json({errors: errors.array()});
+    }
 }
