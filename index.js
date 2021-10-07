@@ -1,4 +1,5 @@
 const express = require("express");
+const  bodyParser = require("body-parser");
 const connect = require("./config/db");
 const router = require("./routes/userRoutes");
 require('dotenv').config()
@@ -7,6 +8,8 @@ const app = express();
 
 // connect mongodb database
 connect();
+
+app.use(bodyParser.json());
 
 // user work like a middleware
 app.use("/", router);
