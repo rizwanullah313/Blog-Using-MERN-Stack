@@ -1,4 +1,5 @@
 const {body, validationResult} = require("express-validator");
+const User = require("../models/User")
 
 
 // code for validation
@@ -12,16 +13,27 @@ module.exports.registerValidations = [
 
 
 // ye yaha export hraha hy our routes/userroutes may imort hoga
-module.exports.register = (req,res)=>{
+module.exports.register = async (req,res)=>{
         // res.json(req.body);
         const {name, email, password}= req.body;
         // res.send(password);
         const errors = validationResult(req);
         if(!errors.isEmpty())
         {
-            res.json(errors.array())
+            res.status(400).json({errors: errors.array()})
         }
-        else{
-            res.json("You have done! thankYou")
+        // else{
+        //     res.json("You have done! thankYou")
+        // }
+
+        try{
+             const checkUser = await User.findOne({email})
+             if(checkUser){
+                 return res.status(400).json({errors: [{msg: 'This Email Is Already Exist'}]});
+             }
         }
+        catch(error){
+           return res.status(500).json({errors: error});
+        }
+        // 5000 server internal error
 }
